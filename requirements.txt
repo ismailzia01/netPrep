@@ -1,0 +1,4 @@
+PySide6-Essentials>=6.6.0
+pynput>=1.7.6
+PyYAML>=6.0.1
+pytest>=8.0.0

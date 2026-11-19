@@ -1,0 +1,35 @@
+[
+  {
+    "id": 101,
+    "question": "In the netPrep simulation model, which protocol layer provides logical process-to-process communication across an internetwork?",
+    "options": {
+      "A": "Physical link layer",
+      "B": "Transport layer",
+      "C": "Presentation layer",
+      "D": "Network interface layer"
+    },
+    "answer": "B"
+  },
+  {
+    "id": 102,
+    "question": "When configuring a classless /24 IPv4 prefix, how many bits are dedicated to the network identifier portion?",
+    "options": {
+      "A": "8 bits",
+      "B": "16 bits",
+      "C": "24 bits",
+      "D": "32 bits"
+    },
+    "answer": "C"
+  },
+  {
+    "id": 103,
+    "question": "Which local broadcast discovery mechanism discovers hardware layer-2 addresses for known IPv4 targets on an Ethernet segment?",
+    "options": {
+      "A": "Address Resolution Protocol (ARP)",
+      "B": "Border Gateway Protocol (BGP)",
+      "C": "Simple Network Management Protocol (SNMP)",
+      "D": "Domain Name System (DNS)"
+    },
+    "answer": "A"
+  }
+]

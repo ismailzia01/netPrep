@@ -1,0 +1,3 @@
+name: "Computer Networks"
+description: "Core networking concepts covering OSI and TCP/IP layers, routing, switching, IP addressing, and common network protocols."
+prompt_hint: "Focus on protocol layer responsibilities, standard RFC port numbers, and subnet calculation rules."

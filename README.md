@@ -1,10 +1,10 @@
-# NetQuiz Assist
+# netPrep
 
-**NetQuiz Assist** is an open-source macOS menu-bar assistant designed to help students practice and review multiple-choice questions (MCQs) in real-time.
+**netPrep** is an open-source macOS menu-bar assistant designed to help students practice and review multiple-choice questions (MCQs) in real-time.
 
 It captures quiz questions from the screen, processes them through optical character recognition (OCR), reasons over domain-specific hints using a lightweight offline local LLM (~2B parameters), and renders the suggested answer letter (A–D) in a clear, visible overlay on screen.
 
-NetQuiz Assist is completely **subject-agnostic**: all core pipeline stages are domain-neutral, allowing any educational domain (e.g. computer networks, operating systems, algorithms) to be added purely as data without altering code.
+netPrep is completely **subject-agnostic**: all core pipeline stages are domain-neutral, allowing any educational domain (e.g. computer networks, operating systems, algorithms) to be added purely as data without altering code.
 
 ---
 
@@ -26,7 +26,7 @@ Only the `AnswerEngine` stage is permitted to access or load the `SubjectPack`. 
 
 ## Design Rule: Transparent, Visible Overlay Only
 
-> **Important**: The answer overlay is a normal, visible window. Under no circumstances will NetQuiz Assist include or accept features intended to hide, disguise, or obscure the overlay or application windows from screen sharing, proctoring, or recording software.
+> **Important**: The answer overlay is a normal, visible window. Under no circumstances will netPrep include or accept features intended to hide, disguise, or obscure the overlay or application windows from screen sharing, proctoring, or recording software.
 
 ---
 
@@ -34,19 +34,22 @@ Only the `AnswerEngine` stage is permitted to access or load the `SubjectPack`. 
 
 ### Requirements
 - macOS 13 (Ventura) or newer
-- Python 3.11+
+- Python 3.11, 3.12, or 3.13 (Python 3.12 recommended; Python 3.14+ lacks prebuilt PySide6 universal2 wheels)
 
 ### Installation
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/netquiz-assist.git
-cd netquiz-assist
+# If needed, install Python 3.12 via Homebrew
+brew install python@3.12
 
-# Create and activate a virtual environment
-python3 -m venv .venv
+# Clone the repository
+git clone https://github.com/your-username/netprep.git
+cd netprep
+
+# Create and activate a virtual environment with Python 3.12
+/opt/homebrew/bin/python3.12 -m venv .venv
 source .venv/bin/activate
 
-# Install dependencies
+# Install dependencies (installs PySide6-Essentials, pynput, PyYAML, pytest)
 pip install -r requirements.txt
 ```
 
@@ -56,7 +59,7 @@ Global hotkey detection across other applications requires macOS Accessibility a
 2. Select **Accessibility** and ensure your terminal emulator (e.g. Terminal, iTerm2, VS Code) or Python is granted access.
 3. Select **Input Monitoring** and verify access is enabled.
 
-*If permissions are not yet granted, NetQuiz Assist will warn you upon startup instead of crashing, and allow triggering scans directly from the menu-bar tray item.*
+*If permissions are not yet granted, netPrep will warn you upon startup instead of crashing, and allow triggering scans directly from the menu-bar tray item.*
 
 ---
 
@@ -64,7 +67,7 @@ Global hotkey detection across other applications requires macOS Accessibility a
 
 Start the macOS menu-bar tray application:
 ```bash
-python -m netquiz_assist.app
+python -m netprep.app
 ```
 
 ### Menu-Bar Controls
