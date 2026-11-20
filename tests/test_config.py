@@ -11,9 +11,17 @@ class TestConfig(unittest.TestCase):
         config = AppConfig()
         self.assertEqual(config.hotkey, "<ctrl>+<alt>+s")
         self.assertEqual(config.active_subject, "computer_networks")
-        self.assertEqual(config.model_name, "dummy")
+        self.assertEqual(config.model_name, "qwen2.5:1.5b")
         self.assertEqual(config.scan_timeout, 10.0)
         self.assertEqual(config.subjects_dir, "subjects")
+        self.assertEqual(config.ollama_host, "http://localhost:11434")
+        self.assertEqual(config.ollama_timeout, 15.0)
+        self.assertEqual(config.ollama_keep_alive, "5m")
+        self.assertEqual(config.overlay_duration, 6.0)
+        self.assertEqual(config.overlay_highlight_color, "#10B981")
+        self.assertEqual(config.overlay_badge_color, "#059669")
+        self.assertEqual(config.overlay_text_color, "#FFFFFF")
+        self.assertEqual(config.overlay_fallback_position, "top_center")
 
     def test_config_from_dict_and_to_dict(self) -> None:
         data = {

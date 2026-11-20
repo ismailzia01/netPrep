@@ -1,0 +1,57 @@
+{
+  "subject_name": "Computer Networks",
+  "engine_name": "dummy",
+  "model_name": "dummy",
+  "total": 3,
+  "correct": 1,
+  "wrong": 2,
+  "invalid_count": 0,
+  "accuracy_pct": 33.33333333333333,
+  "avg_latency_ms": 0.002097000106004998,
+  "p50_latency_ms": 0.0010410003596916795,
+  "p95_latency_ms": 0.004749999789055437,
+  "total_time_sec": 1.4040999303688295e-05,
+  "predicted_distribution": {
+    "A": 0,
+    "B": 3,
+    "C": 0,
+    "D": 0,
+    "INVALID": 0
+  },
+  "topic_accuracy": {
+    "Transport Layer": {
+      "total": 1,
+      "correct": 1,
+      "accuracy_pct": 100.0
+    },
+    "IPv4 Addressing": {
+      "total": 1,
+      "correct": 0,
+      "accuracy_pct": 0.0
+    },
+    "Address Resolution": {
+      "total": 1,
+      "correct": 0,
+      "accuracy_pct": 0.0
+    }
+  },
+  "split": null,
+  "balance_warning": null,
+  "wrong_questions": [
+    {
+      "id": 102,
+      "question": "When configuring a classless /24 IPv4 prefix, how many bits ",
+      "expected": "C",
+      "predicted": "B",
+      "reason": "Mismatched answer"
+    },
+    {
+      "id": 103,
+      "question": "Which local broadcast discovery mechanism discovers hardware",
+      "expected": "A",
+      "predicted": "B",
+      "reason": "Mismatched answer"
+    }
+  ],
+  "timestamp": "2026-11-20T00:51:06.199035"
+}

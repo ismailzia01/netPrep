@@ -56,6 +56,7 @@ if HAS_PYSIDE6:
             on_scan: Callable[[], None] | None = None,
             on_subject_changed: Callable[[str], None] | None = None,
             on_pause_toggled: Callable[[bool], None] | None = None,
+            on_clear_marker: Callable[[], None] | None = None,
             on_quit: Callable[[], None] | None = None,
             parent: QObject | None = None,
         ) -> None:
@@ -64,6 +65,7 @@ if HAS_PYSIDE6:
             self.on_scan = on_scan
             self.on_subject_changed = on_subject_changed
             self.on_pause_toggled = on_pause_toggled
+            self.on_clear_marker = on_clear_marker
             self.on_quit = on_quit
 
             self.setToolTip("netPrep")
@@ -73,6 +75,8 @@ if HAS_PYSIDE6:
             self.subject_action_group.setExclusive(True)
 
             self.pause_action: QAction | None = None
+            self.status_action: QAction | None = None
+            self.clear_action: QAction | None = None
             self._build_menu()
             self.setContextMenu(self.menu)
 
@@ -80,12 +84,23 @@ if HAS_PYSIDE6:
             """Construct the tray menu items."""
             self.menu.clear()
 
+            # 0. Status indicator
+            self.status_action = QAction("Status: Ready", self.menu)
+            self.status_action.setEnabled(False)
+            self.menu.addAction(self.status_action)
+            self.menu.addSeparator()
+
             # 1. Scan now
             scan_action = QAction("Scan now", self.menu)
             scan_action.triggered.connect(self._handle_scan)
             self.menu.addAction(scan_action)
 
-            # 2. Pause / Resume hotkey
+            # 2. Clear marker
+            self.clear_action = QAction("Clear marker", self.menu)
+            self.clear_action.triggered.connect(self._handle_clear_marker)
+            self.menu.addAction(self.clear_action)
+
+            # 3. Pause / Resume hotkey
             self.pause_action = QAction("Pause hotkey", self.menu)
             self.pause_action.setCheckable(True)
             self.pause_action.setChecked(False)
@@ -134,6 +149,11 @@ if HAS_PYSIDE6:
             if self.on_scan:
                 self.on_scan()
 
+        def _handle_clear_marker(self) -> None:
+            logger.info("Tray: 'Clear marker' clicked.")
+            if self.on_clear_marker:
+                self.on_clear_marker()
+
         def _handle_pause_toggle(self, is_paused: bool) -> None:
             if self.pause_action:
                 self.pause_action.setText("Resume hotkey" if is_paused else "Pause hotkey")
@@ -159,6 +179,12 @@ if HAS_PYSIDE6:
                 self.pause_action.setText("Resume hotkey" if is_paused else "Pause hotkey")
                 self.pause_action.blockSignals(False)
 
+        def update_status(self, status_text: str) -> None:
+            """Update tray status label and tooltip."""
+            self.setToolTip(f"netPrep: {status_text}")
+            if self.status_action:
+                self.status_action.setText(f"Status: {status_text}")
+
 else:
 
     class NetPrepTray:  # type: ignore[no-redef]
@@ -170,6 +196,7 @@ else:
             on_scan: Callable[[], None] | None = None,
             on_subject_changed: Callable[[str], None] | None = None,
             on_pause_toggled: Callable[[bool], None] | None = None,
+            on_clear_marker: Callable[[], None] | None = None,
             on_quit: Callable[[], None] | None = None,
             parent: Any = None,
         ) -> None:
@@ -177,6 +204,7 @@ else:
             self.on_scan = on_scan
             self.on_subject_changed = on_subject_changed
             self.on_pause_toggled = on_pause_toggled
+            self.on_clear_marker = on_clear_marker
             self.on_quit = on_quit
             self._is_paused = False
             self._is_visible = False
@@ -202,6 +230,11 @@ else:
             if self.on_scan:
                 self.on_scan()
 
+        def _handle_clear_marker(self) -> None:
+            logger.info("Tray: 'Clear marker' triggered.")
+            if self.on_clear_marker:
+                self.on_clear_marker()
+
         def _handle_pause_toggle(self, is_paused: bool) -> None:
             self._is_paused = is_paused
             logger.info("Tray: Hotkey pause state toggled to %s.", is_paused)
@@ -221,3 +254,6 @@ else:
 
         def update_pause_state(self, is_paused: bool) -> None:
             self._is_paused = is_paused
+
+        def update_status(self, status_text: str) -> None:
+            logger.info("Tray status: %s", status_text)

@@ -4,7 +4,8 @@ Guidelines and rules for human contributors and AI assistants working on netPrep
 
 ## 1. Core Principles & Philosophy
 - **Subject-Agnostic Core**: Pipeline stages (`ScreenCapturer`, `OcrEngine`, `QuestionParser`, `OverlayRenderer`) must remain completely domain-agnostic. Only `AnswerEngine` may access or ingest subject packs.
-- **Privacy & Completely Offline**: The application operates 100% offline at runtime. No external network requests, analytics, or telemetry calls are allowed during application execution.
+- **Privacy & Completely Offline**: The application operates 100% offline at runtime. No internet calls at runtime. Only localhost model servers. Model downloads happen once, at setup, by the user.
+- **In-Memory Screen Capture**: Screen captures must remain in-memory (`CapturedImage`). Do not write screenshots to disk or persistent storage during runtime.
 - **Visible Overlay Rule (Non-Negotiable)**: The answer overlay is a normal, visible window. Never implement features that hide the overlay or application windows from screen capture, screen recording, proctoring tools, or window lists.
 
 ## 2. Technical Stack & Code Standards

@@ -1,4 +1,6 @@
 PySide6-Essentials>=6.6.0
 pynput>=1.7.6
+pyobjc-framework-Quartz>=8.0
+pyobjc-framework-Vision>=8.0
 PyYAML>=6.0.1
 pytest>=8.0.0

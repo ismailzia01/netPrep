@@ -60,7 +60,7 @@ class ScreenCapturer(ABC):
     """Abstract interface for screen capture."""
 
     @abstractmethod
-    def capture(self) -> Any:
+    def capture(self, region: tuple[int, int, int, int] | None = None) -> Any:
         """Capture the current screen region containing the question."""
         raise NotImplementedError
 
@@ -107,10 +107,18 @@ class OverlayRenderer(ABC):
         """Display the suggested answer on screen."""
         raise NotImplementedError
 
+    def show_message(self, message: str, duration: float | None = None) -> None:
+        """Display an informational or error toast message on screen."""
+        pass
+
     @abstractmethod
     def hide(self) -> None:
         """Hide or dismiss the overlay."""
         raise NotImplementedError
+
+    def clear(self) -> None:
+        """Clear the overlay (alias for hide)."""
+        self.hide()
 
 
 # --- Stub Implementations ---
@@ -119,9 +127,15 @@ class OverlayRenderer(ABC):
 class StubScreenCapturer(ScreenCapturer):
     """Stub implementation returning placeholder capture data."""
 
-    def capture(self) -> dict[str, Any]:
+    def capture(self, region: tuple[int, int, int, int] | None = None) -> dict[str, Any]:
         logger.debug("StubScreenCapturer: capture() invoked.")
-        return {"width": 1920, "height": 1080, "pixels": b"stub_pixel_data"}
+        return {
+            "width": 1920,
+            "height": 1080,
+            "pixels": b"stub_pixel_data",
+            "scale_factor": 2.0,
+            "origin": (0.0, 0.0),
+        }
 
 
 class StubOcrEngine(OcrEngine):
@@ -195,6 +209,7 @@ class StubOverlayRenderer(OverlayRenderer):
     def __init__(self) -> None:
         self.is_visible = False
         self.last_answer: str | None = None
+        self.last_message: str | None = None
 
     def show_answer(self, answer_letter: str, question: ParsedQuestion) -> None:
         self.is_visible = True
@@ -205,7 +220,13 @@ class StubOverlayRenderer(OverlayRenderer):
             question.question[:30],
         )
 
+    def show_message(self, message: str, duration: float | None = None) -> None:
+        self.is_visible = True
+        self.last_message = message
+        logger.info("StubOverlayRenderer: Showing message '%s'", message)
+
     def hide(self) -> None:
         self.is_visible = False
         self.last_answer = None
+        self.last_message = None
         logger.debug("StubOverlayRenderer: Overlay hidden.")

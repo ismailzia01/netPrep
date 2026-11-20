@@ -8,7 +8,9 @@
       "C": "Presentation layer",
       "D": "Network interface layer"
     },
-    "answer": "B"
+    "answer": "B",
+    "topic": "Transport Layer",
+    "split": "dev"
   },
   {
     "id": 102,
@@ -19,7 +21,9 @@
       "C": "24 bits",
       "D": "32 bits"
     },
-    "answer": "C"
+    "answer": "C",
+    "topic": "IPv4 Addressing",
+    "split": "dev"
   },
   {
     "id": 103,
@@ -30,6 +34,8 @@
       "C": "Simple Network Management Protocol (SNMP)",
       "D": "Domain Name System (DNS)"
     },
-    "answer": "A"
+    "answer": "A",
+    "topic": "Address Resolution",
+    "split": "holdout"
   }
 ]

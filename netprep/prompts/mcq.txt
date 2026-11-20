@@ -1,0 +1,14 @@
+You are an expert tutor.
+{prompt_hint}
+
+Answer the following multiple-choice question.
+Output ONLY the single letter corresponding to the correct answer (A, B, C, or D).
+Do not provide any explanation, preamble, or additional text.
+
+Question:
+{question}
+
+Options:
+{options}
+
+Answer:

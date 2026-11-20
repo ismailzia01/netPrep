@@ -19,9 +19,18 @@ class AppConfig:
 
     hotkey: str = "<ctrl>+<alt>+s"
     active_subject: str = "computer_networks"
-    model_name: str = "dummy"
+    model_name: str = "qwen2.5:1.5b"
     scan_timeout: float = 10.0
     subjects_dir: str = "subjects"
+    capture_region: tuple[int, int, int, int] | None = None
+    ollama_host: str = "http://localhost:11434"
+    ollama_timeout: float = 15.0
+    ollama_keep_alive: str = "5m"
+    overlay_duration: float = 6.0
+    overlay_highlight_color: str = "#10B981"
+    overlay_badge_color: str = "#059669"
+    overlay_text_color: str = "#FFFFFF"
+    overlay_fallback_position: str = "top_center"
     extra_settings: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -31,12 +40,34 @@ class AppConfig:
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> AppConfig:
         """Create AppConfig from dictionary with graceful defaults."""
+        raw_region = data.get("capture_region")
+        capture_region: tuple[int, int, int, int] | None = None
+        if isinstance(raw_region, (list, tuple)) and len(raw_region) == 4:
+            try:
+                capture_region = (
+                    int(raw_region[0]),
+                    int(raw_region[1]),
+                    int(raw_region[2]),
+                    int(raw_region[3]),
+                )
+            except (ValueError, TypeError):
+                capture_region = None
+
         return cls(
             hotkey=str(data.get("hotkey", "<ctrl>+<alt>+s")),
             active_subject=str(data.get("active_subject", "computer_networks")),
-            model_name=str(data.get("model_name", "dummy")),
+            model_name=str(data.get("model_name", "qwen2.5:1.5b")),
             scan_timeout=float(data.get("scan_timeout", 10.0)),
             subjects_dir=str(data.get("subjects_dir", "subjects")),
+            capture_region=capture_region,
+            ollama_host=str(data.get("ollama_host", "http://localhost:11434")),
+            ollama_timeout=float(data.get("ollama_timeout", 15.0)),
+            ollama_keep_alive=str(data.get("ollama_keep_alive", "5m")),
+            overlay_duration=float(data.get("overlay_duration", 6.0)),
+            overlay_highlight_color=str(data.get("overlay_highlight_color", "#10B981")),
+            overlay_badge_color=str(data.get("overlay_badge_color", "#059669")),
+            overlay_text_color=str(data.get("overlay_text_color", "#FFFFFF")),
+            overlay_fallback_position=str(data.get("overlay_fallback_position", "top_center")),
             extra_settings=data.get("extra_settings", {}),
         )
 
